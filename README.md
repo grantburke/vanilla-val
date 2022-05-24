@@ -16,7 +16,7 @@ Create a good ole HTML form and give your inputs their respectful names. You can
 Add a script tag to your HTML.
 
 ```javascript
-<script src="https://unpkg.com/vanilla-val@1.0.0/dist/vanilla-val.min.js"></script>
+<script src="https://unpkg.com/@grantburke/vanilla-val@1.0.0/dist/vanilla-val.min.js"></script>
 ```
 
 ### Steps for Validation 🪜
