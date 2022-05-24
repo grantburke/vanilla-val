@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <form id="form" action="/">
+    <input type="text" name="name" data-vval-rules="required|minLength:2">
+    <ul class="vval-name-errors"></ul>
+    <input type="number" name="age" data-vval-rules="required|min:12|max:30">
+    <ul class="vval-age-errors"></ul>
+    <button id="submit-btn" type="submit">Submit</button>
+  </form>
+  <script src="https://unpkg.com/vanilla-val@1.0.0/dist/vanilla-val.min.js"></script>
+  <script>
+    // Setup
+    const form = document.querySelector('form')
+    form.addEventListener('submit', onSubmit)
+    const val = new VanillaVal({ htmlFormSelector: 'form', validateOnEntry: true })
+
+    // Methods
+    function onSubmit(e) {
+      e.preventDefault()
+      const validated = val.validate()
+      if (validated === true) {
+        console.log('submitted')
+        return
+      }
+
+      // Use your errors
+      console.log(validated)
+    }
+  </script>
+</body>
+
+</html>
