@@ -1,5 +1,8 @@
 {
   "name": "vanilla-val",
+  "author": {
+    "name": "Grant Burke"
+  },
   "private": false,
   "version": "1.0.0",
   "files": [
