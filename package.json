@@ -13,6 +13,10 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grantburke/vanilla-val.git"
+  },
   "keywords": [
     "vanilla",
     "validation",
