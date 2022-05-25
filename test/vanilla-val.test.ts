@@ -205,6 +205,50 @@ describe('VanillaVal', () => {
     expect(val.validate()).toBe(true)
   })
 
+  test('Select inputs validate/invalidate rules as expected', () => {
+    const form = `
+      <form>
+        <select name="package" data-vval-rules="required">
+          <option value="">Select a package</option>
+          <option value="basic">Basic</option>
+          <option value="premium">Premium</option>
+        </select>
+        <ul class="vval-package-errors"></ul>
+      </form>
+    `
+    document.body.innerHTML = form
+    const val = new VanillaVal()
+    expect(val.validate()).toBe(false)
+    const packageEl = document.querySelector('select[name="package"]')
+    fireEvent.change(packageEl, { target: { value: 'basic' } })
+    expect(val.validate()).toBe(true)
+    fireEvent.change(packageEl, { target: { value: '' } })
+    expect(val.validate()).toBe(false)
+  })
+
+  test("Select inputs update error list on change when 'validateOnEntry' config is used", () => {
+    const form = `
+      <form>
+        <select name="package" data-vval-rules="required">
+          <option value="">Select a package</option>
+          <option value="basic">Basic</option>
+          <option value="premium">Premium</option>
+        </select>
+        <ul class="vval-package-errors"></ul>
+      </form>
+    `
+    document.body.innerHTML = form
+    const val = new VanillaVal({
+      htmlFormSelector: 'form',
+      validateOnEntry: true,
+    })
+    const packageEl = document.querySelector('select[name="package"]')
+    fireEvent.change(packageEl, { target: { value: 'basic' } })
+    fireEvent.change(packageEl, { target: { value: '' } })
+    const packageElErrors = document.querySelector('.vval-package-errors')
+    expect(packageElErrors.innerHTML).toBeTruthy()
+  })
+
   test('Rules for a form should be generated as expected when using an html form selector other than the default', () => {
     const form = `
       <form id="my-form">

@@ -74,9 +74,10 @@ export class VanillaVal {
    */
   private initializeValueBinding(validateOnEntry: boolean) {
     this._formRules.forEach((rule) => {
-      const ruleEl = this._form?.querySelector(`input[name="${rule.formField}"`)
+      const ruleEl = this._form?.querySelector(`[name="${rule.formField}"`)
       ruleEl?.addEventListener('change', () => {
-        const updatedValue = (ruleEl as HTMLInputElement).value
+        const updatedValue = (ruleEl as HTMLInputElement | HTMLSelectElement)
+          .value
         rule.value = updatedValue
         if (validateOnEntry) this.validateRule(rule)
       })
