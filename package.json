@@ -8,7 +8,14 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/vanilla-val.min.js",
+  "main": "./dist/vanilla-val.umd.js",
+  "module": "./dist/vanilla-val.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vanilla-val.es.js",
+      "require": "./dist/vanilla-val.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

@@ -4,7 +4,7 @@ This a project for making form validation simple. I created this to have a small
 
 ## How to Use ⌨️
 
-Create a good ole HTML form and give your inputs their respectful names. You can add rules by utilizing a `data-vval-rules` attribute on the input element like so. Rules are separated by a `|` and parameters for certain rules are by a `:`. You can find a list of current form rules and how to use them down [below](#current-rules-and-how-to-use-them-📜).
+Create a good ole HTML form and give your inputs their respectful names. You can add rules by utilizing a `data-vval-rules` attribute on the input element like so. Rules are separated by a `|` and parameters for certain rules are by a `:`. You can find a list of current form rules and how to use them down [below](#current-rules-and-how-to-use-them).
 
 ```html
 <form id="form" action="/">
@@ -16,15 +16,15 @@ Create a good ole HTML form and give your inputs their respectful names. You can
 Add a script tag to your HTML.
 
 ```javascript
-<script src="https://unpkg.com/@grantburke/vanilla-val@1.0.0/dist/vanilla-val.min.js"></script>
+<script src="https://unpkg.com/@grantburke/vanilla-val@1.1.0/dist/vanilla-val.umd.js"></script>
 ```
 
-### Steps for Validation 🪜
+### Steps for Validation
 
 - Grab your form.
 - Add a `submit` event listener to the form and prevent the default event.
 - Instantiate the `VanillaVal` class and call `validate` to verify all validation passes. The `validate` method will return true or false based on whether validation was successful or not.
-- Configuration options are listed [below](#configuration-object-⚙️)
+- Configuration options are listed [below](#configuration-object)
 
 ```html
 <script>
@@ -58,7 +58,20 @@ val.max('age', 29, 30) // returns { success: true }
 
 - Note: the validate method will not work if no form element is present or found with the selector in the configuration object.
 
-### Configuration Object ⚙️
+### Use In Node
+
+This package supports both ESM and UMD. Based on which format you're working in, you can utilize the package on the server like so:
+
+```javascript
+// ESM
+import VanillaVal from '@grantburke/vanilla-val'
+// UMD
+const VanillaVal = require('@grantburke/vanilla-val')
+```
+
+- Note: you will need to initialize the `VanillaVal` class with a configuration object of `{ htmlFormSelector: null, validateOnEntry: false }` to prevent any errors related to using the DOM on the server.
+
+### Configuration Object
 
 ```javascript
 // Default config object:
@@ -82,7 +95,7 @@ There are currently seven rules. They are listed below with an example:
 - `'max:n'` - validates the max value of a number by passing in the value for `n` after a colon; ex. `'max:10'`
 - `'min:n'` - validates the min value of a number by passing in the value for `n` after a colon; ex. `'min:10'`
 
-You can pass in multiple rules for one value in your `data-vval-rules` attribute as seen [above](#how-to-use-⌨️).
+You can pass in multiple rules for one value in your `data-vval-rules` attribute as seen [above](#how-to-use).
 
 ## TODO 📝
 

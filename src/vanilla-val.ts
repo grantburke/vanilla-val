@@ -7,12 +7,13 @@ import {
 import { MethodNames, ErrorMessages } from './enums'
 
 export class VanillaVal {
-  _form: Element | null = null
-  _formRules: ValidationRule[] = []
-  _config: VanillaValConfig = {
+  private _form: Element | null = null
+  private _formRules: ValidationRule[] = []
+  private _config: VanillaValConfig = {
     htmlFormSelector: 'form',
     validateOnEntry: false,
   }
+  private _serverInitialized: boolean = false
 
   /**
    * Constructor for VanillaVal class
@@ -80,6 +81,15 @@ export class VanillaVal {
         if (validateOnEntry) this.validateRule(rule)
       })
     })
+  }
+
+  /**
+   * A method to initialize the VanillaVal class with form rules instead of relying on an HTML form
+   * @param formRules list of validation rules to be initialized with
+   */
+  public init(formRules: ValidationRule[]): void {
+    this._formRules = formRules
+    this._serverInitialized = true
   }
 
   /**
@@ -293,18 +303,20 @@ export class VanillaVal {
         errorsForRule.push(validationResponse.message!)
     })
     const formField = validationRule['formField']
-    const errorList = document.querySelector(`ul.vval-${formField}-errors`)
-    if (errorList) {
-      errorList.innerHTML = ''
-      errorsForRule.forEach((error) => {
-        var li = document.createElement('li')
-        li.appendChild(document.createTextNode(error))
-        errorList.appendChild(li)
-      })
-    } else
-      console.warn(
-        `Form input ${formField} does not have an error list ul element with the class name of 'vval-${formField}-errors'`
-      )
+    if (!this._serverInitialized) {
+      const errorList = document.querySelector(`ul.vval-${formField}-errors`)
+      if (errorList) {
+        errorList.innerHTML = ''
+        errorsForRule.forEach((error) => {
+          var li = document.createElement('li')
+          li.appendChild(document.createTextNode(error))
+          errorList.appendChild(li)
+        })
+      } else
+        console.warn(
+          `Form input ${formField} does not have an error list ul element with the class name of 'vval-${formField}-errors'`
+        )
+    }
     return { formField, errors: errorsForRule }
   }
 

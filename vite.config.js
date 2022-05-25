@@ -6,8 +6,7 @@ module.exports = defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/main.ts'),
       name: 'VanillaVal',
-      formats: ['umd'],
-      fileName: (format) => 'vanilla-val.min.js',
+      fileName: (format) => `vanilla-val.${format}.js`,
     },
   },
 })

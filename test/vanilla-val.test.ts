@@ -2,6 +2,7 @@ import { describe, expect, test, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
 import { VanillaVal } from '../src/vanilla-val'
 import { ErrorMessages } from '../src/enums'
+import { ValidationRule } from '../src/interfaces'
 
 describe('VanillaVal', () => {
   /**
@@ -353,5 +354,39 @@ describe('VanillaVal', () => {
     expect(() => new VanillaVal().validate()).toThrowError(
       'The min/max value passed in is not a number'
     )
+  })
+
+  /**
+   * @vitest-environment node
+   */
+  test('Init method will allow for adding validation rules manually', () => {
+    const formRules: ValidationRule[] = [
+      {
+        formField: 'name',
+        value: 'Grant',
+        rules: ['required', 'minLength:2', 'maxLength:20'],
+      },
+    ]
+    const val = new VanillaVal()
+    val.init(formRules)
+    expect(val).toHaveProperty('_formRules', formRules)
+    expect(val).toHaveProperty('_serverInitialized', true)
+  })
+
+  test('Validate method will work as expected when using the Init method', () => {
+    const formRules: ValidationRule[] = [
+      {
+        formField: 'name',
+        value: 'Grant',
+        rules: ['required', 'minLength:2', 'maxLength:20'],
+      },
+    ]
+    const val = new VanillaVal()
+    val.init(formRules)
+    expect(val.validate()).toBe(true)
+    // Invalidate value
+    formRules[0].value = 'G'
+    val.init(formRules)
+    expect(val.validate()).toBe(false)
   })
 })
