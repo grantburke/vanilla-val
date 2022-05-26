@@ -1,6 +1,6 @@
 # VanillaVal 🍦
 
-This a project for making form validation simple. I created this to have a small, no-dependency option for frontend form validation. I plan to update this package with more rules and features as needed - PRs are welcome!
+This a project for making form validation simple. I created this to have a small, no-dependency option for frontend form validation. I plan to update this package with more rules and features as needed - PRs are welcome! A demo can be found <a href="https://codepen.io/grant_s_burke/pen/vYdZWpm" target="_blank">here</a>.
 
 ## How to Use ⌨️
 
@@ -60,7 +60,7 @@ val.max('age', 29, 30) // returns { success: true }
 
 ### Use In Node
 
-This package supports both ESM and UMD. You will need to initialize the `VanillaVal` class with a configuration object of `{ htmlFormSelector: null, validateOnEntry: false }` to prevent any errors related to calling the DOM on the server. You can call the `init` method and pass in a list of form rules. This will allow for the usage of the `validate` method like usual. A demo can be found <a href="https://codepen.io/grant_s_burke/pen/vYdZWpm" target="_blank">here</a>.
+This package supports both ESM and UMD. You will need to initialize the `VanillaVal` class with a configuration object of `{ htmlFormSelector: null, validateOnEntry: false }` to prevent any errors related to calling the DOM on the server. You can call the `init` method and pass in a list of form rules. This will allow for the usage of the `validate` method like usual.
 
 ```javascript
 // ESM
