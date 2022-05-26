@@ -60,16 +60,24 @@ val.max('age', 29, 30) // returns { success: true }
 
 ### Use In Node
 
-This package supports both ESM and UMD. Based on which format you're working in, you can utilize the package on the server like so:
+This package supports both ESM and UMD. You will need to initialize the `VanillaVal` class with a configuration object of `{ htmlFormSelector: null, validateOnEntry: false }` to prevent any errors related to calling the DOM on the server. You can call the `init` method and pass in a list of form rules. This will allow for the usage of the `validate` method like usual. A demo can be found <a href="https://codepen.io/grant_s_burke/pen/vYdZWpm" target="_blank">here</a>.
 
 ```javascript
 // ESM
 import VanillaVal from '@grantburke/vanilla-val'
 // UMD
 const VanillaVal = require('@grantburke/vanilla-val')
-```
 
-- Note: you will need to initialize the `VanillaVal` class with a configuration object of `{ htmlFormSelector: null, validateOnEntry: false }` to prevent any errors related to using the DOM on the server.
+const val = new VanillaVal({ htmlFormSelector: null, validateOnEntry: false })
+const formRules = [
+  {
+    formField: 'name',
+    value: 'Grant',
+    rules: ['required'],
+  },
+]
+val.init(formRules)
+```
 
 ### Configuration Object
 
