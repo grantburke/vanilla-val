@@ -6,6 +6,7 @@ export enum MethodNames {
   MAX = 'max',
   MIN = 'min',
   URL = 'url',
+  MATCHES = 'matches',
 }
 
 export enum ErrorMessages {
@@ -16,4 +17,5 @@ export enum ErrorMessages {
   MAX = '[FORM_FIELD] is more than maximum number supplied',
   MIN = '[FORM_FIELD] is less than minimum number supplied',
   URL = '[FORM_FIELD] is not a valid url',
+  MATCHES = '[FORM_FIELD] has incorrect format',
 }

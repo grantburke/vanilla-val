@@ -58,11 +58,11 @@ export class VanillaVal {
       const rulesStr = form
         .querySelector(`[name=${formField}]`)
         ?.getAttribute('data-vval-rules')
-      const rulesArr = rulesStr?.split('|')
+      const rulesArr = rulesStr?.split('|') ?? []
       formRules.push({
         formField: formField,
         value: formObj[formField],
-        rules: rulesArr ?? [],
+        rules: rulesArr,
       })
     }
     return formRules
@@ -241,6 +241,25 @@ export class VanillaVal {
   }
 
   /**
+   * Validates if form field matches against the regex parameter passed in
+   * @param formField input element's name attribute
+   * @param value value of input element
+   * @param regex regular expression to check value against
+   * @returns an object with a success value and an error message if unsuccessful
+   */
+  public matches(
+    formField: string,
+    value: string,
+    regex: RegExp
+  ): ValidatedResponse {
+    if (regex.test(value)) return { success: true }
+    return {
+      success: false,
+      message: this.getErrorMessage(formField, ErrorMessages.MATCHES),
+    }
+  }
+
+  /**
    * Validates a validation rule
    * @param validationRule validation rule to be validated
    * @returns the form field name and errors found in validation if any
@@ -249,7 +268,14 @@ export class VanillaVal {
     let errorsForRule: string[] = []
     validationRule.rules.forEach((r) => {
       let validationResponse: ValidatedResponse = { success: true }
-      const [method, length] = r.split(':')
+      let length: string = ''
+      let regex: RegExp = new RegExp('')
+      const [method, ...rest] = r.split(':')
+      if (method === MethodNames.MATCHES) {
+        regex = new RegExp(rest.join(':'))
+      } else {
+        length = rest.join()
+      }
       switch (method) {
         case MethodNames.REQUIRED:
           validationResponse = this.required(
@@ -295,6 +321,13 @@ export class VanillaVal {
           validationResponse = this.url(
             validationRule.formField,
             validationRule.value
+          )
+          break
+        case MethodNames.MATCHES:
+          validationResponse = this.matches(
+            validationRule.formField,
+            validationRule.value,
+            regex
           )
           break
         default:

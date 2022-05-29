@@ -102,12 +102,13 @@ There are currently seven rules. They are listed below with an example:
 - `'minLength:n'` - validates the min length of a string by passing in the length for `n` after a colon; ex. `'minLength:10'`
 - `'max:n'` - validates the max value of a number by passing in the value for `n` after a colon; ex. `'max:10'`
 - `'min:n'` - validates the min value of a number by passing in the value for `n` after a colon; ex. `'min:10'`
+- `'matches:{your-regex}'` - validates whether the value matches the regular expression passed in after the colon
+  - ex. `'matches:[3-9]\\d\\d'` -- don't forget to escape the appropriate characters for the string literal in the HTML
 
 You can pass in multiple rules for one value in your `data-vval-rules` attribute as seen [above](#how-to-use).
 
 ## TODO 📝
 
-- Add `matches` method for regex
 - Add `password` and `passwordConfirmation` methods?
 - Add configuration for custom error messages?
 
