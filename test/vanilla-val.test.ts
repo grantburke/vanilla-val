@@ -180,12 +180,47 @@ describe('VanillaVal', () => {
     })
   })
 
+  test('Phone should return false success with error message or true success if valid', () => {
+    const val = new VanillaVal()
+    const formField = 'phone'
+    const message = `${formField} has incorrect format`
+    expect(val.phone(formField, '123')).toEqual({
+      success: false,
+      message,
+    })
+    expect(val.phone(formField, 'name')).toEqual({
+      success: false,
+      message,
+    })
+    expect(val.phone(formField, '(123) 456-7890')).toEqual({
+      success: true,
+    })
+    expect(val.phone(formField, '123-456-7890')).toEqual({
+      success: true,
+    })
+  })
+
   test('Validate should work when matches is used in a form', () => {
     const form = `
       <form>
         <input type="number" name="my-num" data-vval-rules="matches:[3-9]\\d\\d" value="300" />
         <ul class="vval-my-num-errors"></ul>
         <input type="text" name="phone" data-vval-rules="matches:^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$" />
+        <ul class="vval-phone-errors"></ul>
+      </form>
+    `
+    document.body.innerHTML = form
+    const val = new VanillaVal()
+    expect(val.validate()).toBe(false)
+    const phoneEl = document.querySelector('input[name="phone"]')
+    fireEvent.change(phoneEl, { target: { value: '123-456-7890' } })
+    expect(val.validate()).toBe(true)
+  })
+
+  test('Validate should work when phone is used in a form', () => {
+    const form = `
+      <form>
+        <input type="text" name="phone" data-vval-rules="phone" />
         <ul class="vval-phone-errors"></ul>
       </form>
     `

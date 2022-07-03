@@ -260,6 +260,23 @@ export class VanillaVal {
   }
 
   /**
+   * Validates if form field has a valid phone
+   * @param formField input element's name attribute
+   * @param value value of input element
+   * @returns an object with a success value and an error message if unsuccessful
+   */
+  public phone(formField: string, value: string): ValidatedResponse {
+    const phoneRegex: RegExp =
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
+
+    if (phoneRegex.test(String(value))) return { success: true }
+    return {
+      success: false,
+      message: this.getErrorMessage(formField, ErrorMessages.PHONE),
+    }
+  }
+
+  /**
    * Validates a validation rule
    * @param validationRule validation rule to be validated
    * @returns the form field name and errors found in validation if any
@@ -328,6 +345,12 @@ export class VanillaVal {
             validationRule.formField,
             validationRule.value,
             regex
+          )
+          break
+        case MethodNames.PHONE:
+          validationResponse = this.phone(
+            validationRule.formField,
+            validationRule.value
           )
           break
         default:

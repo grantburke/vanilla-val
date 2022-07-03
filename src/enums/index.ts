@@ -7,6 +7,7 @@ export enum MethodNames {
   MIN = 'min',
   URL = 'url',
   MATCHES = 'matches',
+  PHONE = 'phone',
 }
 
 export enum ErrorMessages {
@@ -18,4 +19,5 @@ export enum ErrorMessages {
   MIN = '[FORM_FIELD] is less than minimum number supplied',
   URL = '[FORM_FIELD] is not a valid url',
   MATCHES = '[FORM_FIELD] has incorrect format',
+  PHONE = '[FORM_FIELD] has incorrect format',
 }

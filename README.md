@@ -93,11 +93,10 @@ val.init(formRules)
 
 ## Current Rules and How To Use Them 📜
 
-There are currently seven rules. They are listed below with an example:
-
 - `'required'` - validates if the value is not null and not empty
 - `'email'` - validates if the value is a valid email address
 - `'url'` - validates if the value is a valid url
+- `'phone'` - validates if the value is a valid phone
 - `'maxLength:n'` - validates the max length of a string by passing in the length for `n` after a colon; ex. `'maxLength:10'`
 - `'minLength:n'` - validates the min length of a string by passing in the length for `n` after a colon; ex. `'minLength:10'`
 - `'max:n'` - validates the max value of a number by passing in the value for `n` after a colon; ex. `'max:10'`
